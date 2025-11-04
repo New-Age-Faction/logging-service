@@ -1,0 +1,14 @@
+###########################################################
+# Ignored files / extensions.
+# Anything that's generated should never be commited
+###########################################################
+
+### - For development purposes
+/Legacy
+
+### - To avoid ANY potential chances that the Discord token is published.
+.env
+env
+
+### - Avoids the node modules from being pushed. Only package.json and its lock are necessary
+node_modules
