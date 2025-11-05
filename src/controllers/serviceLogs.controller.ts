@@ -1,8 +1,10 @@
+// - Imports ------------------------------------------------------------------
 import { Request, Response, NextFunction } from "express";
 import { z } from "zod";
 import { sendDiscordEmbed } from "../services/discordWebhooks.service";
 import { logger } from "../utils/logger";
 
+// - Constants ----------------------------------------------------------------
 const schema = z.object({
   service: z.string(),
   level: z.enum(["info", "warn", "error"]),
@@ -10,6 +12,7 @@ const schema = z.object({
   context: z.record(z.string(), z.any()).optional(),
 });
 
+// - Constants ----------------------------------------------------------------
 export async function logEvent(
   req: Request,
   res: Response,

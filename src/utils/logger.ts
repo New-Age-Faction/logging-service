@@ -28,6 +28,7 @@ export const logger = winston.createLogger({
       const colorMap: Record<string, (s: string) => string> = {
         ERROR: colors.red,
         WARN: colors.yellow,
+        WARNING: colors.yellow,
         INFO: colors.cyan,
         DEBUG: colors.blue,
         NOTICE: colors.magenta,
