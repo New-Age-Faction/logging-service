@@ -1,7 +1,8 @@
 import axios from "axios";
 import { logger } from "../utils/logger";
+import Environment from "../config/environment";
 
-const DISCORD_WEBHOOK = process.env.DISCORD_WEBHOOK_URL!;
+const environment = new Environment();
 
 interface DiscordEmbed {
   title: string;
@@ -12,7 +13,7 @@ interface DiscordEmbed {
 
 export async function sendDiscordEmbed(embed: DiscordEmbed) {
   try {
-    await axios.post(DISCORD_WEBHOOK, {
+    await axios.post(environment.webhooks.serviceLogging, {
       embeds: [embed],
     });
     logger.info(`Sent embed: ${embed.title}`);

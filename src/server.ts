@@ -1,16 +1,15 @@
 // - Start of service ---------------------------------------------------------
-import { config } from "dotenv";
 import app from "./app";
+import Environment from "./config/environment";
 import { logger } from "./utils/logger";
 // - Config loading -----------------------------------------------------------
 logger.debug("Loading config...");
-config();
+const environment = new Environment();
 logger.debug("Environment config loaded");
 
 // - App management -----------------------------------------------------------
-const PORT = process.env.PORT || 3000;
-logger.notice(`Service is using port: ${PORT}`);
+logger.notice(`Service is using port: ${environment.port}`);
 
-app.listen(PORT, () => {
-  logger.notice(`Application started ${PORT}`);
+app.listen(environment.port, () => {
+  logger.notice(`Application started ${environment.port}`);
 });

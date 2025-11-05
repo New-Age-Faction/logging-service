@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { z } from "zod";
 import { sendDiscordEmbed } from "../services/discordWebhooks.service";
+import { logger } from "../utils/logger";
 
 const schema = z.object({
   service: z.string(),
@@ -15,6 +16,7 @@ export async function logEvent(
   next: NextFunction,
 ) {
   try {
+    logger.info("Service Log; Log event");
     const data = schema.parse(req.body);
 
     await sendDiscordEmbed({
