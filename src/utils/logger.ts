@@ -27,6 +27,7 @@ export const logger = winston.createLogger({
       // Severity level colors
       const colorMap: Record<string, (s: string) => string> = {
         ERROR: colors.red,
+        CRIT: colors.bold.bgRed.white,
         WARN: colors.yellow,
         WARNING: colors.yellow,
         INFO: colors.cyan,
