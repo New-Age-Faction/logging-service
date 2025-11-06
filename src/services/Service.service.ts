@@ -15,6 +15,9 @@ import LaunchedEndpoint from "../strategies/serviceLogs/launched.strategy";
 import { logger } from "../utils/logger";
 import { sendDiscordEmbed } from "./discordWebhooks.service";
 import addServiceIdentificationToEmbed from "../utils/serviceLogEmbedBase";
+import TracebackEndpoint from "../strategies/serviceLogs/traceback.strategy";
+import { parseErrorStack } from "../utils/parseErrorStack";
+import ShutdownEndpoint from "../strategies/serviceLogs/shutdown.strategy";
 
 // - Classes ------------------------------------------------------------------
 class Service {
@@ -51,23 +54,67 @@ class Service {
     this.iconUrl = url;
   }
 
-  private sendEmbed(embed: EmbedBuilder) {
+  private async sendEmbed(embed: EmbedBuilder) {
     const contextualizedEmbed = addServiceIdentificationToEmbed(embed, {
       serviceName: this.displayName,
       serviceIcon: this.iconUrl,
     });
-    sendDiscordEmbed(contextualizedEmbed, environment.webhooks.serviceLogging);
+    logger.debug("Awaiting sendDiscordEmbed");
+    await sendDiscordEmbed(
+      contextualizedEmbed,
+      environment.webhooks.serviceLogging,
+    );
   }
 
   /**
    * Call this when the service has fully launched and becomes completely
    * operational.
    */
-  public launched() {
+  public async launched() {
+    logger.debug("Service is self sending itself as launched");
     const endpoint = new LaunchedEndpoint();
     const embed = endpoint.buildEmbed({
       serviceName: this.displayName,
       serviceIcon: this.iconUrl,
+    });
+    this.sendEmbed(embed);
+  }
+
+  /**
+   * Call this when the service goes through a critical crash and needs to send
+   * a full traceback to the webhook service
+   */
+  public async traceback(err: Error) {
+    logger.debug("Service is self sending a traceback");
+    const parsed = parseErrorStack(err.stack);
+
+    const endpoint = new TracebackEndpoint();
+    const embed = endpoint.buildEmbed({
+      serviceName: this.displayName,
+      serviceIcon: this.iconUrl,
+      column: parsed?.column,
+      line: parsed?.line,
+      message: err.message,
+      stackTrace: err.stack,
+      file: parsed?.file,
+      method: parsed?.method,
+    });
+    this.sendEmbed(embed);
+  }
+
+  /**
+   * Call this when the service finally shuts down.
+   * You WILL need to await a promise of minimum 1000ms to ensure
+   * that the embed has been propagated to discord
+   */
+  public async shutdown(reason: string) {
+    logger.debug("Service is self sending a shutdown");
+
+    const endpoint = new ShutdownEndpoint();
+    const embed = endpoint.buildEmbed({
+      serviceName: this.displayName,
+      serviceIcon: this.iconUrl,
+      reason: reason,
     });
     this.sendEmbed(embed);
   }
