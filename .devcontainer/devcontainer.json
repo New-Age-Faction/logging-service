@@ -21,14 +21,12 @@
         "ms-vscode.vscode-typescript-next",
         "vscode-icons-team.vscode-icons",
         "streetsidesoftware.code-spell-checker",
-        "Postman.postman-for-vscode"
+        "humao.rest-client"
       ]
     }
   },
   "postCreateCommand": "npm install",
-  "forwardPorts": [
-    3000
-  ],
+  "forwardPorts": [3000],
   "remoteUser": "node",
   "mounts": [
     "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
