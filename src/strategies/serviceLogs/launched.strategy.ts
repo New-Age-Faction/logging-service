@@ -32,9 +32,9 @@ export default class LaunchedEndpoint
     const embed = new EmbedBuilder()
       .setAuthor({
         name: "Service Launched",
-        iconURL: "https://cdn-icons-png.flaticon.com/512/7944/7944483.png",
+        iconURL: "https://cdn-icons-png.flaticon.com/512/10148/10148430.png",
       })
-      .setColor(0x00ff00);
+      .setColor(0x2596be);
     return embed;
   }
 }
