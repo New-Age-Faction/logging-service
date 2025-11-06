@@ -34,11 +34,3 @@
     "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
   ]
 }
-/*
-        "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode",
-        "github.copilot",
-        "ms-vscode.vscode-typescript-next",
-        "vscode-icons-team.vscode-icons",
-        "streetsidesoftware.code-spell-checker"
-        */
