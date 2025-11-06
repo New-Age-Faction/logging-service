@@ -15,7 +15,7 @@ import { config } from "dotenv";
  * Singleton class that hosts all of the environment variables required for
  * this service to run and execute properly
  */
-export default class Environment {
+class Environment {
   /**
    * Local instance kept within the class forever, to return only one
    * instantiated class ever.
@@ -69,7 +69,7 @@ export default class Environment {
     if (variable === undefined) {
       logger.error("No webhook specified for the service logging!");
       throw new Error(
-        "No webhook found in process' environment variables for the Service Logging discord channel: SERVICE_LOGGING_WEBHOOK",
+        "No webhook found in process' environment variables for the Service Logging discord channel: SERVICE_LOGGING_WEBHOOK. Without this, the service cannot send logs from services back to discord",
       );
     } else {
       logger.info(
@@ -87,3 +87,5 @@ export default class Environment {
     return Environment.instance;
   }
 }
+
+export const environment = new Environment();
