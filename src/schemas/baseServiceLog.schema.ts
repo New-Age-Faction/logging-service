@@ -9,14 +9,14 @@ import { z } from "zod";
 
 // - Schema -------------------------------------------------------------------
 export const baseServiceLogSchema = z.object({
-  serviceID: z.string().describe("ID of the service to log"),
-  environment: z
-    .enum(["dev", "prod"])
-    .describe("Environment in which the service is currently residing"),
-  context: z
-    .record(z.string(), z.any())
-    .optional()
-    .describe("Optional context"),
+  serviceName: z
+    .string()
+    .describe("Name of the service responsible for the log occurrences"),
+  serviceIcon: z
+    .url()
+    .describe(
+      "URL to give along side the service name in the footer of embeds",
+    ),
   thumbnail: z
     .string()
     .optional()

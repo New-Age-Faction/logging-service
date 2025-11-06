@@ -9,6 +9,8 @@ import { logger } from "../utils/logger";
 import path from "path";
 import fs from "fs";
 import { sendDiscordEmbed } from "../services/discordWebhooks.service";
+import { environment } from "../config/environment";
+import { makeServiceLogController } from "../controllers/serviceLogs.controller";
 
 // - Routing ------------------------------------------------------------------
 // TODO: CLEAN UP
@@ -40,18 +42,8 @@ for (const file of files) {
     }
 
     const endpoint = new EndpointClass();
-
-    router.post(`/${endpoint.name}`, async (req, res, next) => {
-      logger.notice(`CALLED: ${endpoint.name}`);
-      try {
-        const data = endpoint.schema.parse(req.body);
-        const embed = endpoint.buildEmbed(data);
-        await sendDiscordEmbed(embed);
-        res.status(200).json({ status: "ok" });
-      } catch (err) {
-        next(err);
-      }
-    });
+    const controller = makeServiceLogController(endpoint);
+    router.post(`/${endpoint.name}`, controller);
   });
 }
 

@@ -1,17 +1,19 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { logger } from "../utils/logger";
-import Environment from "../config/environment";
 import { EmbedBuilder } from "discord.js";
 
-const environment = new Environment();
-
-export async function sendDiscordEmbed(embed: EmbedBuilder) {
+export async function sendDiscordEmbed(
+  embed: EmbedBuilder,
+  webhookURL: string,
+) {
   try {
-    await axios.post(environment.webhooks.serviceLogging, {
+    await axios.post(webhookURL, {
       embeds: [embed.toJSON()],
     });
-    logger.info(`Sent embed: ${embed.data.type}`);
+    logger.info(`Sent embed: ${embed.data.color}`);
   } catch (err) {
-    logger.error("Failed to send Discord message", err);
+    if (err instanceof AxiosError) {
+      logger.error("Failed to send embed.", err);
+    }
   }
 }
