@@ -60,3 +60,14 @@ Content-Type: application/json
   "title": "Tested error",
   "description": "Markdown enabled description"
 }
+
+### Warning tests
+POST {{serviceLogUrl}}/warning
+Content-Type: application/json
+
+{
+  "serviceName": "{{serviceName}}",
+  "serviceIcon": "{{serviceIcon}}",
+  "title": "Tested warning",
+  "description": "Markdown enabled description"
+}

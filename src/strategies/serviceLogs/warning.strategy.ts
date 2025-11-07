@@ -9,13 +9,13 @@ import { baseServiceLogSchema } from "../../schemas/baseServiceLog.schema";
 import { EmbedBuilder } from "discord.js";
 
 // - Classes ------------------------------------------------------------------
-export default class ErrorEndpoint
+export default class WarningEndpoint
   implements ServiceLogEndpointStrategy<z.infer<typeof baseServiceLogSchema>>
 {
   /**
    * Name of the actual endpoint that will be created
    */
-  name = "error";
+  name = "warning";
 
   /**
    * Could've also been externalized to /src/schemas as errorSchema.
@@ -41,10 +41,10 @@ export default class ErrorEndpoint
       .setTitle(data.title)
       .setDescription(data.description)
       .setAuthor({
-        name: "Error",
-        iconURL: "https://cdn-icons-png.flaticon.com/512/12483/12483530.png",
+        name: "Warning",
+        iconURL: "https://cdn-icons-png.flaticon.com/512/7210/7210828.png",
       })
-      .setColor(0xee3839);
+      .setColor(0xf7ac15);
 
     return embed;
   }
