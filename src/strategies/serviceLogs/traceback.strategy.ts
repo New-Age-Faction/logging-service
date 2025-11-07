@@ -87,14 +87,14 @@ export default class TracebackEndpoint
     }
     if (data.column) {
       embed.addFields({
-        name: "Column",
+        name: "Cl",
         value: `-# ${data.column}`,
         inline: true,
       });
     }
     if (data.line) {
       embed.addFields({
-        name: "Line",
+        name: "Ln",
         value: `-# ${data.line}`,
         inline: true,
       });

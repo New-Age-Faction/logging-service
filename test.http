@@ -36,7 +36,7 @@ Content-Type: application/json
   "stackTrace": "allo",
   "method": "Culprit function",
   "file": "test.ts",
-  "column": 0,
+  "column": 67,
   "line": 67
 }
 
@@ -48,4 +48,15 @@ Content-Type: application/json
   "serviceName": "{{serviceName}}",
   "serviceIcon": "{{serviceIcon}}",
   "message": "Bare minimum embed"
+}
+
+### Error tests
+POST {{serviceLogUrl}}/error
+Content-Type: application/json
+
+{
+  "serviceName": "{{serviceName}}",
+  "serviceIcon": "{{serviceIcon}}",
+  "title": "Tested error",
+  "description": "Markdown enabled description"
 }

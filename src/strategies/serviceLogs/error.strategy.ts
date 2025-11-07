@@ -28,8 +28,6 @@ export default class ErrorEndpoint
   schema = baseServiceLogSchema.extend({
     title: z.string(),
     description: z.string(),
-    errorCode: z.string().optional(),
-    critical: z.boolean().default(false).optional(),
   });
 
   /**
@@ -42,13 +40,11 @@ export default class ErrorEndpoint
     const embed = new EmbedBuilder()
       .setTitle(data.title)
       .setDescription(data.description)
-      .setColor(0xff0000)
-      .addFields(
-        { name: "API", value: "Online", inline: true },
-        { name: "DB", value: "Connected", inline: true },
-      )
-      .setTimestamp()
-      .setFooter({ text: "Monitoring Service" });
+      .setAuthor({
+        name: "Error",
+        iconURL: "https://cdn-icons-png.flaticon.com/512/12483/12483530.png",
+      })
+      .setColor(0xee3839);
 
     return embed;
   }
