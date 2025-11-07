@@ -1,0 +1,51 @@
+@baseUrl = http://localhost:3000
+@serviceLogUrl = {{baseUrl}}/services
+
+@serviceIcon = https://cdn-icons-png.flaticon.com/512/9610/9610566.png
+@serviceName = TEST SCRIPT
+
+### SERVICE LOG TESTING #############################################
+### Shutdown tests
+POST {{serviceLogUrl}}/shutdown
+Content-Type: application/json
+
+{
+  "serviceName": "{{serviceName}}",
+  "serviceIcon": "{{serviceIcon}}",
+  "reason": "Test reason."
+}
+
+### Launched tests
+POST {{serviceLogUrl}}/launched
+Content-Type: application/json
+
+{
+  "serviceName": "{{serviceName}}",
+  "serviceIcon": "{{serviceIcon}}"
+}
+
+### Traceback tests
+POST {{serviceLogUrl}}/traceback
+Content-Type: application/json
+
+{
+  "serviceName": "{{serviceName}}",
+  "serviceIcon": "{{serviceIcon}}",
+  "message": "The traceback message",
+  "description": "A detailed user provided description of the issue",
+  "stackTrace": "allo",
+  "method": "Culprit function",
+  "file": "test.ts",
+  "column": 0,
+  "line": 67
+}
+
+### Traceback tests
+POST {{serviceLogUrl}}/traceback
+Content-Type: application/json
+
+{
+  "serviceName": "{{serviceName}}",
+  "serviceIcon": "{{serviceIcon}}",
+  "message": "Bare minimum embed"
+}
