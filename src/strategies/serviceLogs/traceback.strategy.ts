@@ -9,6 +9,7 @@ import z from "zod";
 import ServiceLogEndpointStrategy from "./strategyInterface";
 import { baseServiceLogSchema } from "../../schemas/baseServiceLog.schema";
 import { EmbedBuilder } from "discord.js";
+import { logger } from "../../utils/logger";
 
 // - Classes ------------------------------------------------------------------
 export default class TracebackEndpoint
@@ -50,6 +51,14 @@ export default class TracebackEndpoint
    * @returns
    */
   public buildEmbed(data: z.infer<typeof this.schema>): EmbedBuilder {
+    logger.debug("Building traceback embed.");
+    logger.debug(`Description: ${data.description}`);
+    logger.debug(`Message: ${data.message}`);
+    logger.debug(`Method: ${data.method}`);
+    logger.debug(`column: ${data.column}`);
+    logger.debug(`File: ${data.file}`);
+    logger.debug(`Line: ${data.line}`);
+    logger.debug(`Stacktrace: ${data.stackTrace}`);
     const embed = new EmbedBuilder()
       .setAuthor({
         name: "Traceback",
