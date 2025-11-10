@@ -24,6 +24,8 @@ class Environment {
   public port: string = "";
   public webhooks = {
     serviceLogging: "",
+    publicLiveServer: "",
+    privateLiveServer: "",
   };
 
   // Private constructor prevents external instantiation
@@ -39,6 +41,8 @@ class Environment {
     // Time to extract the stuff from the process' env.
     this.setupPort();
     this.setupServiceLogWebHook();
+    this.setupPrivateLiveServerWebHook();
+    this.setupPublicLiveServerWebHook();
 
     Environment.instance = this;
   }
@@ -76,6 +80,51 @@ class Environment {
         `Service webhook variable was found. Not printed for obvious reasons`,
       );
       this.webhooks.serviceLogging = variable;
+    }
+  }
+
+  /**
+   * Setup the webhook responsible for the live chat output from the server.
+   */
+  private setupPublicLiveServerWebHook() {
+    logger.debug("Managing public live server webhook");
+    const variable = process.env.PUBLIC_LIVE_SERVER_WEBHOOK;
+
+    if (variable === undefined) {
+      logger.error(
+        "No discord channel webhook specified for the public live chat / server logging!",
+      );
+      throw new Error(
+        "No webhook found in process' environment variables for the server's public logging discord channel / livechat: PUBLIC_LIVE_SERVER_WEBHOOK. Without this, the service cannot send server events from services back to discord",
+      );
+    } else {
+      logger.info(
+        `Public live server webhook variable was found. Not printed for obvious reasons`,
+      );
+      this.webhooks.publicLiveServer = variable;
+    }
+  }
+
+  /**
+   * Setup the webhook responsible for the private chat output from the server.
+   * The all seeing channel that will contain everything from the server.
+   */
+  private setupPrivateLiveServerWebHook() {
+    logger.debug("Managing private live server webhook");
+    const variable = process.env.PRIVATE_LIVE_SERVER_WEBHOOK;
+
+    if (variable === undefined) {
+      logger.error(
+        "No discord channel webhook specified for the private live chat / server logging!",
+      );
+      throw new Error(
+        "No webhook found in process' environment variables for the server's private logging discord channel / livechat: PRIVATE_LIVE_SERVER_WEBHOOK. Without this, the service cannot send server events from services back to discord",
+      );
+    } else {
+      logger.info(
+        `Private live server webhook variable was found. Not printed for obvious reasons`,
+      );
+      this.webhooks.privateLiveServer = variable;
     }
   }
 
