@@ -40,6 +40,7 @@ for (const file of files) {
     }
 
     const endpoint = new EndpointClass();
+    // TODO: Fix to live chat controller maker.
     const controller = makeServiceLogController(endpoint);
     router.post(`/${endpoint.name}`, controller);
   });
