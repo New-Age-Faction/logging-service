@@ -8,8 +8,6 @@ import { Router } from "express";
 import { logger } from "../utils/logger";
 import path from "path";
 import fs from "fs";
-import { sendDiscordEmbed } from "../services/discordWebhooks.service";
-import { environment } from "../config/environment";
 import { makeServiceLogController } from "../controllers/serviceLogs.controller";
 
 // - Routing ------------------------------------------------------------------
