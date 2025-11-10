@@ -18,3 +18,18 @@ export async function sendDiscordEmbed(
     }
   }
 }
+
+export async function sendDiscordMessage(content: string, webhookURL: string) {
+  try {
+    await axios.post(webhookURL, {
+      content, // Discord webhooks accept plain text messages via the "content" field
+    });
+
+    logger.info(`Sent message: "${content}"`);
+  } catch (err) {
+    logger.error("Failed to send message to Discord");
+    if (err instanceof AxiosError) {
+      logger.error("Failed to send message. Axios error", err);
+    }
+  }
+}
